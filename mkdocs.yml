@@ -1,0 +1,52 @@
+site_name: 红绿灯三原色
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  font:
+    code: Roboto Mono
+
+  language: zh
+
+  # logo: assets/logo.png
+  # homepage: https://example.com
+  # favicon: images/favicon.png
+
+  features:
+    - header.autohide
+    - navigation.instant
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - navigation.indexes
+
+markdown_extensions:
+  - toc: 
+      permalink: ⚓︎
+  - abbr
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.keys
+  - pymdownx.tabbed
+
+
+plugins:
+  - awesome-pages: 
+      strict: false
+  - search:
+      prebuild_index: true
