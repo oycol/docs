@@ -26,7 +26,7 @@ ls /usr/share/kbd/keymaps/**/*.map.gz
     set 1 esp on
     ```
 
-    !!! info 
+    !!! info "parted没有执行分区格式化  / 懒得看了" 
         分区设置用parted时 ,退出parted时需要重新格式化相应的分区
     
 5. 挂载主分区到**mnt**目录，新建`/mnt/efi`文件夹，挂载efi分区到`/mnt/efi`
@@ -146,8 +146,11 @@ sudo pacman -S --needed base-devel
     rmmod pcspkr
     ```
 
+- 移除无用软件包
+
+    ```shell
+    pacman -Rn $(pacman -Qdtq)
+    ```
+
     
 
-
-
-### 
