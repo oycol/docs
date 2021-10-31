@@ -88,6 +88,14 @@ apt clean cat /dev/null > ~/.bash_history && history -c history -w
 
 
 
+pve 单cluster 节点无法启动, 参考文档 [[SOLVED\] - Another "cluster not ready - no quorum? (500)" case | Proxmox Support Forum](https://forum.proxmox.com/threads/another-cluster-not-ready-no-quorum-500-case.56104/)
+
+```shell
+pvecm expected 1
+```
+
+
+
 ## 手动安装pve
 
 修改hosts

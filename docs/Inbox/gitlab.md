@@ -60,7 +60,7 @@ jenkins设置国内镜像
   >   sudo gitlab-ctl stop sidekiq
   >   sudo gitlab-ctl status
   >   
-  >   sudo gitlab-backup restore BACKUP= <timestamp>.backup.tar
+  >   sudo gitlab-backup restore BACKUP= <timestamp>
   >   ```
   >
   >   >    restore  `/etc/gitlab/gitlab-secrets.json`

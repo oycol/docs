@@ -9,9 +9,14 @@ CREATE TABLE users (
   PRIMARY KEY (uid)
 );
 
-INSERT INTO users VALUES ('0', '0','root',ENCRYPT('123456'));
-INSERT INTO users VALUES ('3000', '3000','hunagwx',ENCRYPT('123456'));
+  gecos varchar(16) NUll,
+  homedir varchar(16) default "/home/huangwx" ,
+  shell varchar(16) default "/usr/bin/bash" ,
+  
+INSERT INTO users VALUES ('3000', '3000','huangwx',ENCRYPT('123456'));
 INSERT INTO users VALUES ('3001', '3001','user1',ENCRYPT('123456'));
 INSERT INTO users VALUES ('3002', '3002','user2',ENCRYPT('123456'));
+
+INSERT INTO users VALUES ('0', '0','root',ENCRYPT('123456'));
 ```
 

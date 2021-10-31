@@ -1,3 +1,5 @@
+
+
 ## 系统架构
 
 概念 [5.1 Kubernetes介绍 · Docker和Kubernetes实践指南 (unixhot.com)](http://k8s.unixhot.com/kubernetes/kubernetes-introduce.html#system)
@@ -19,15 +21,30 @@
 
   - Replication Controller（新版本已经被ReplicaSet所替代）
   - ReplicaSet（新版本被封装在Deployment中）
-  - Deployment：封装了Pod的副本管理、部署更新、回滚、扩容、缩容等功能。
+  - Deployment：封装了Pod的副本管理、部署更新、回滚、扩容、缩容等功能。 无状态应用，管理的所有的pod一样，提供同一个服务，不需要考虑在那台Node运行，pod使用同一个数据卷，对外提供统一的服务。
+
   - DaemonSet：保证所有的Node上有且只有一个Pod在运行。
-  - StatefulSet：有状态的应用，为 Pod 提供唯一的标识，它可以保证部署和 scale 的顺序。
-  - Job：使用Kubernetes运行单一任务。
+
+  - StatefulSet：有状态的应用，为 Pod 提供唯一的标识，它可以保证部署和 scale 的顺序。独享存储
+
+      分布式应用部署实例是会有依赖关系，主备关系，被称为有状态，例如MySql主从，etcd集群
+
+      1. 固定主机名，专有存储卷
+      2. pod有序的部署、扩容、删除、停止
+      3. pod分配稳定、唯一的网络标识
+      4. 独享存储 
+
+  - Job：使用Kubernetes运行单一任务。 批量处理的任务，达到指定的次数时，任务完成就完成了，删除job将清除其创建的Pod。
+
   - CronJob：使用Kubernetes运行定时任务。
 
 - **Service**
 
   由于Pod的生命周期是短暂的，而且每次重启Pod的IP地址都会发生变化，而且一个Pod有多个副本，也就是说一个集群中有了多个节点，就需要考虑负载均衡的问题。Kubernetes使用Service来实现Pod的访问，而且Service有一个Cluster IP，通常也称之为VIP，是固定不变的。
+  
+  4 层代理
+  
+  ingress 7 层代理
 
 ## 网络
 
@@ -54,6 +71,10 @@ Service是为Pod提供访问和负载均衡的网络地址段
 ```shell
 kubectl get service
 ```
+
+
+
+## 安装
 
 
 

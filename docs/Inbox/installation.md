@@ -1,6 +1,6 @@
 ## Containerd 部署
 
-[Releases · containerd/containerd (github.com)](https://github.com/containerd/containerd/releases) 下载最新版本containerd
+[Releases · containerd/containerd ](https://github.com/containerd/containerd/releases/latest) 下载最新版本containerd
 
 ```shell
 cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
@@ -27,6 +27,11 @@ tar -C / -xf cri-containerd-cni*    --no-same-owner --no-overwrite-dir
 # 生成默认配置文件
  mkdir /etc/containerd
  containerd config default > /etc/containerd/config.toml
+ 
+ # OOM 选项
+ Containerd 是容器的守护者，一旦发生内存不足的情况，理想的情况应该是先杀死容器，而不是杀死 Containerd。所以需要调整 Containerd 的 OOM 权重，减少其被 OOM Kill 的几率。最好是将 oom_score 的值调整为比其他守护进程略低的值。这里的 oom_socre 其实对应的是 /proc/<pid>/oom_socre_adj，在早期的 Linux 内核版本里使用 oom_adj 来调整权重, 后来改用 oom_socre_adj 了。
+ 
+ 
 ```
 
 

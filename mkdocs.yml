@@ -51,12 +51,14 @@ markdown_extensions:
   - abbr
   - attr_list
   - admonition
+  - def_list
   - pymdownx.details
   - pymdownx.snippets
   - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.keys
   - pymdownx.tabbed
+  - pymdownx.tasklist
 
 
 plugins:
