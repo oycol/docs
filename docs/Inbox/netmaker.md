@@ -1,3 +1,94 @@
+## Netmaker  Openwrt  Support  Discussion
+
+Hi, every one who use  netmaker, now there are some difficulties in openwrt adaptation, his ecology is so huge , so  I need your help to complete it.  
+
+This is the table that  openwrt common CPU architecture,some architecture maybe have some trouble with running it. if you have some  good idea you can discuss with us，pull your request  maybe the best. 
+
+| **ARCH** | Supported | Whether it is tested | CPU Model  Modal |
+| -------- | --------- | -------------------- | ---------------- |
+| amd64    | - [ ]     | - [ ]                |                  |
+| arm      | - [ ]     | - [ ]                |                  |
+| arm64    | - [ ]     | - [ ]                |                  |
+| mips     | - [ ]     | - [ ]                |                  |
+| mips64   | - [ ]     | - [ ]                |                  |
+| mipsle   | - [ ]     | - [ ]                |                  |
+| mips64le | - [ ]     | - [ ]                |                  |
+
+
+
+### Netmaker  openwrt client usage
+
+The netclient  should keep alive for get  all the client  info,  so it must run checkin for a period of time， in systemd， it was provided by timer service,but in openwrt ,there is no such mechanism,so , we create  a openwrt service to finsh it, on this way, you can move  netclient service on  /etcd/init.d/ directory, so you can run netclient service,  /etc/netclient/netclient binary is required, 
+
+First , you should join server with parameter `--daemon off`, when you join  successful , move  openwrt-daemon.sh file  to /etcd/init.d/netclient,grant privilieges, start service and enable service,work completed. 
+
+```shell
+mv openwrt-daemon.sh /etcd/init.d/netclient
+chomd a+x /etcd/init.d/netclient
+service netclient start
+service netclient enable
+```
+
+- start    start netclient service
+
+- stop     stop  netclient service
+
+- enable   startup on boot
+
+    when you enable netclient service ，you can find it on  /etc/rc.d/
+
+
+
+## Netmaker 使用指南
+
+Obviously not
+
+| device under test                                           | fireware                                                     | comment                 |
+| ----------------------------------------------------------- | ------------------------------------------------------------ | ----------------------- |
+| [NEW_D2 （新三）](https://openwrt.org/toh/lenovo/newifi_d2) | [ ImmortalWrt 18.06](https://github.com/immortalwrt/immortalwrt/tree/openwrt-18.06) | Compatible with openwrt |
+| Xiaomi CR6608                                               | [ ImmortalWrt 18.06](https://github.com/immortalwrt/immortalwrt/tree/openwrt-18.06) | Compatible with openwrt |
+|                                                             |                                                              |                         |
+
+### Netclient
+
+openwrt  service
+
+```shell
+#!/bin/sh /etc/rc.common
+# Example script
+# Copyright (C) 2007 OpenWrt.org
+ 
+start() {        
+  bash /etc/netclient/checkin.sh &
+}
+ 
+stop() { 
+  PID=`ps -ef|grep checkin.sh|grep -v grep|awk '{print $1}'`
+  kill $PID
+}
+```
+
+
+
+```shell
+#!/bin/sh
+while true;do
+  ./netclient checkin -n all >> /tmp/checkin.log 2>&1
+  LOG_SIZE=`ls -l /tmp/checkin.log|awk '{print $5}'`
+  if [ $LOG_SIZE -qt 10485760 ];then
+    mv /tmp/checkin.log /tmp/checkin.log.0
+  fi
+  sleep 10
+done
+
+```
+
+
+
+### Troubling Shotting
+
+- netmaker server无法自动加入(k3s ,containerd,nerdctl)
+
 ## NetMaker 网络质量稳定性测试
 
 ### 实验环境
@@ -9,10 +100,6 @@
 | laptop   | 无公网 | 10.0.0.2 | debian      |
 |          | 无公网 |          | openwrt     |
 |          |        |          |             |
-
-### Troubling Shotting
-
-- netmaker server无法自动加入(k3s ,containerd,nerdctl)
 
 ## Mtr测试
 

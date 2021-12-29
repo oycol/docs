@@ -29,13 +29,18 @@ VM_IMAGE=focal-server-cloudimg-amd64.img
 VM_DISK=40G
 VM_STORAGE=local
 
+if qm status $VM_ID;then
+    echo "$VM_ID exists"
+    exit 1
+fi
+
 qm create $VM_ID --cores $VM_CORES --memory $VM_MEM --name $VM_NAME --net0 virtio,bridge=vmbr0 # 设置os type
 
 # 导入下载的镜像到local-lvm 存储空间
-qm importdisk $VM_ID $VM_IMAGE $VM_STORAGE
+qm importdisk $VM_ID $VM_IMAGE $VM_STORAGE --format=qcow2
 
 # 将导入的磁盘以 scsi 方式挂载到虚拟机上面
-qm set $VM_ID --scsihw virtio-scsi-pci --scsi0 $VM_STORAGE:$VM_ID:vm-$VM_ID-disk-0.raw
+qm set $VM_ID --scsihw virtio-scsi-pci --scsi0 $VM_STORAGE:$VM_ID/vm-$VM_ID-disk-0.qcow2
 
 # 添加 Cloud-Init CDROM 驱动（必须添加这个vm才能启动cloud-init）
 qm set $VM_ID --ide2 $VM_STORAGE:cloudinit
@@ -85,6 +90,14 @@ apt clean cat /dev/null > ~/.bash_history && history -c history -w
 - Pve 排错原来发现是sbin 是个链接文件，被我覆盖了
 
   resize2fs /dev/mapper/pve-root
+  
+- 取消vm的lock 状态
+
+  ```shell
+  qm unlock vm-id
+  ```
+
+  
 
 
 
@@ -94,7 +107,13 @@ pve 单cluster 节点无法启动, 参考文档 [[SOLVED\] - Another "cluster no
 pvecm expected 1
 ```
 
+- 磁盘转换
 
+    ```shell
+    qemu-img convert -f raw -O qcow2 vm-302-disk-0.raw vm-302-disk-0.qcow2
+    ```
+
+    
 
 ## 手动安装pve
 

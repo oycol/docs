@@ -8,7 +8,7 @@ API 接口 [Proxmox VE API Documentation](https://pve.proxmox.com/pve-docs/api-v
 | pve5to6 |      |      |
 | pve6to7 |      |      |
 | pveam |      |      |
-| pvebanner | | |
+| pvebannyer | | |
 | pveceph | | |
 | pvecm | | |
 | pvedaemon | | |

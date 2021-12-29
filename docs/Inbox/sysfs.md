@@ -6,7 +6,7 @@ while : ; do : ; done &
 
 | /sys 下的子目录                                              | 所包含的内容                                                 |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| /sys/devices                                                 | 这是内核对系统中所有设备的分层次表达模型，也是 /sys 文件系统管理设备的最重要的目录结构，下文会对它的内部结构作进一步分析； |
+| **/sys/devices**                                             | 这是内核对系统中所有设备的分层次表达模型，也是 /sys 文件系统管理设备的最重要的目录结构，下文会对它的内部结构作进一步分析； |
 | /sys/dev                                                     | 这个目录下维护一个按字符设备和块设备的主次号码(major:minor)链接到真实的设备(/sys/devices下)的符号链接文件，它是在内核 2.6.26 首次引入；(可以看到此文件下的都是连接到/sys/devices目录下的文件的文件连接) |
 | /sys/bus                                                     | 这是内核设备按总线类型分层放置的目录结构， devices 中的所有设备都是连接于某种总线之下，在这里的每一种具体总线之下可以找到每一个具体设备的符号链接，它也是构成 Linux 统一设备模型的一部分；(这里的设备也是符号连接，是连接到/sys/devices目录下的文件) |
 | /sys/class                                                   | 这是按照设备功能分类的设备模型，如系统所有输入设备都会出现在 /sys/class/input 之下，而不论它们是以何种总线连接到系统。它也是构成 Linux 统一设备模型的一部分； |
@@ -16,5 +16,5 @@ while : ; do : ; done &
 | /sys/kernel                                                  | 这里是内核所有可调整参数的位置，目前只有 uevent_helper, kexec_loaded, mm, 和新式的 slab 分配器等几项较新的设计在使用它，其它内核可调整参数仍然位于 sysctl (/proc/sys/kernel) 接口中 ; |
 | /sys/module                                                  | 这里有系统中所有模块的信息，不论这些模块是以内联(inlined)方式编译到内核映像文件(vmlinuz)中还是编译为外部模块(ko文件)，都可能会出现在 /sys/module 中：　　编译为外部模块(ko文件)在加载后会出现对应的 /sys/module/<module_name>/, 并且在这个目录下会出现一些属性文件和属性目录来表示此外部模块的一些信息，如版本号、加载状态、所提供的驱动程序等；　　编译为内联方式的模块则只在当它有非0属性的模块参数时会出现对应的 /sys/module/<module_name>, 这些模块的可用参数会出现在 /sys/modules/<modname>/parameters/<param_name> 中，　　如 /sys/module/printk/parameters/time 这个可读写参数控制着内联模块 printk 在打印内核消息时是否加上时间前缀；　　所有内联模块的参数也可以由 "<module_name>.<param_name>=<value>" 的形式写在内核启动参数上，如启动内核时加上参数 "printk.time=1" 与 向 "/sys/module/printk/parameters/time" 写入1的效果相同；　　没有非0属性参数的内联模块不会出现于此。 |
 | /sys/power                                                   | 这里是系统中电源选项，这个目录下有几个属性文件可以用于控制整个机器的电源状态，如可以向其中写入控制命令让机器关机、重启等。 |
-| /sys/slab (对应 2.6.23 内核，在 2.6.24 以后移至 /sys/kernel/slab) | 从2.6.23 开始可以选择 SLAB 内存分配器的实现，并且新的 SLUB（Unqueued Slab Allocator）被设置为缺省值；如果编译了此选项，在 /sys 下就会出现 /sys/slab ，里面有每一个 kmem_cache 结构体的可调整参数。对应于旧的 SLAB 内存分配器下的 /proc/slabinfo 动态调整接口，新式的 /sys/kernel/slab/<slab_name> 接timtim口中的各项信息和可调整项显得更为清晰。 |
+| /sys/slab (对应 2.6.23 内核，在 2.6.24 以后移至 /sys/kernel/slab) | 从2.6.23 开始可以选择 SLAB 内存分配器的实现，并且新的 SLUB（Unqueued Slab Allocator）被设置为缺省值；如果编译了此选项，在 /sys 下就会出现 /sys/slab ，里面有每一个 kmem_cache 结构体的可调整参数。对应于旧的 SLAB 内存分配器下的 /proc/slabinfo 动态调整接口，新式的 /sys/kernel/slab/<slab_name> 接口中的各项信息和可调整项显得更为清晰。 |
 

@@ -1,7 +1,3 @@
-## 硬件温度状态
-
-
-
 ## 磁盘热插
 
 正常情况下，添加磁盘后需要重启系统才能被内核识别，在/dev/下才有对应的设备号，使用fdisk -l才会显示出来。但是有时候不方便重启。此时可以使用下面的方法。
@@ -29,17 +25,4 @@
 链接: https://www.junmajinlong.com/linux/fsmgr_mkpart_mkfs/
 
 SIZE is an integer and optional unit (example: 10M is 10 * 1024 * 1024).  Units are K, M, G, T, P, E, Z, Y (powers of  1024)  or KB, MB, ... (powers of 1000).
-
-###  文件超出指定大小删除
-
- ```shell
- if [ -e $FILE ]; then
-         LOG_FILE_SIZE=`stat --format=%s $FILE` # 字节
-         if [ $LOG_FILE_SIZE -gt 10240000 ]; then  # 10M
-                 rm -f $FILE
-         fi
- fi
- ```
-
-
 

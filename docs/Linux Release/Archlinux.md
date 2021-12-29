@@ -7,9 +7,12 @@
 1. 进入archlinux iso 引导安装界面
 
 2. 设置按键映射
-```shell
-ls /usr/share/kbd/keymaps/**/*.map.gz
-```
+
+    ```shell
+    ls /usr/share/kbd/keymaps/**/*.map.gz
+    ```
+
+    
 
 
 3. 手动设置archlinux联网环境，配置文件 [`/etc/systemd/network`](https://wiki.archlinux.org/title/systemd-networkd)
@@ -22,7 +25,7 @@ ls /usr/share/kbd/keymaps/**/*.map.gz
     ```shell
     mklable gpt
     mkpart "EFI system partition" fat32 1M 260M
-    mkpart "Arch" ext4 1M 100%
+    mkpart "Arch" ext4 260M 100%
     set 1 esp on
     ```
 
@@ -71,24 +74,25 @@ ls /usr/share/kbd/keymaps/**/*.map.gz
 
 13. 安装系统引导  /  指定的cpu微码   /  生成启动配置文件
 
-    === "UEFI引导"
-         
-         ```shell
-         pacman -S  grub efibootmgr
-         grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
-         pacman -S intel-ucode/amd-ucode
-         grub-mkconfig -o /boot/grub/grub.cfg
-         ```
+     === "UEFI引导"
+          
+          ```shell
+          pacman -S  grub efibootmgr
+          grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+          pacman -S intel-ucode/amd-ucode
+          grub-mkconfig -o /boot/grub/grub.cfg
+          ```
 
-    === "BIOS引导" 
-        
-         ```shell
-         pacman -S grub
-         grub-install --target=i386-pc /dev/sd # 指定的分区盘符
-         grub-mkconfig -o /boot/grub/grub.cfg
-         ```
-        !!! info
-             可以参照GPT分区格式，也可以直接使用MBR分区格式，简单，磁盘头部预留1-2M空间给MBR记录使用
+     === "BIOS引导" 
+         
+
+          ```shell
+          pacman -S grub
+          grub-install  /dev/sd # 指定的分区盘符
+          grub-mkconfig -o /boot/grub/grub.cfg
+          ```
+         !!! info
+              可以参照GPT分区格式，也可以直接使用MBR分区格式，简单，磁盘头部预留1-2M空间给MBR记录使用
 
 14. 重启系统
 
@@ -118,6 +122,8 @@ sudo pacman -S --needed base-devel
 # 字体
  - ttf-fira-code
  - 
+# 声音模块
+ - alsa-utils
 # FileBowser 
 	- dolphin
 # FileSearching Engine
@@ -126,7 +132,7 @@ sudo pacman -S --needed base-devel
 	- kitty
 # Bowser
 	- Edge
-	 - aur microsoft-edge-dev-bin
+	- aur microsoft-edge-dev-bin
 
 # Archive managers
 	- 7z
@@ -134,7 +140,9 @@ sudo pacman -S --needed base-devel
 	- clash
 ```
 
+### 救援模式密码找回
 
+[Reset lost root password - ArchWiki (archlinux.org)](https://wiki.archlinux.org/title/Reset_lost_root_password#Using_the_debug_shell)
 
 
 
@@ -154,3 +162,4 @@ sudo pacman -S --needed base-devel
 
     
 
+### 

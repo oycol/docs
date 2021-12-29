@@ -76,5 +76,36 @@ kubectl get service
 
 ## 安装
 
+## yaml文件
 
+k8s api对象的定义有两个部分
 
+- Metadata 部分，存放对象的元数据
+
+- Spec部分，对象独有的定义，描述对象表达的功能
+
+    selector
+
+    控制器定义 ↑
+
+    ---
+
+    被控制对象 ↓
+
+    template： Pod 模板 
+
+## 网络
+
+学到k8s 这块,发现主要的问题还是在
+
+### Service
+
+### Ingress 
+
+关于
+
+### MetaILB
+
+安装：
+
+ 

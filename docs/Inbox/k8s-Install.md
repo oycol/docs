@@ -39,6 +39,29 @@ cpu >=2
 
 安装containerd
 
+
+
+### 集群证书
+
+[PKI 证书和要求 | Kubernetes](https://kubernetes.io/zh/docs/setup/best-practices/certificates/)
+
+集群默认生成一年证书，进行tls安全认证
+
+Kubernetes 需要 PKI 才能执行以下操作：
+
+- Kubelet 的客户端证书，用于 API 服务器身份验证
+- API 服务器端点的证书
+- 集群管理员的客户端证书，用于 API 服务器身份认证
+- API 服务器的客户端证书，用于和 Kubelet 的会话
+- API 服务器的客户端证书，用于和 etcd 的会话
+- 控制器管理器的客户端证书/kubeconfig，用于和 API 服务器的会话
+- 调度器的客户端证书/kubeconfig，用于和 API 服务器的会话
+- [前端代理](https://kubernetes.io/zh/docs/tasks/extend-kubernetes/configure-aggregation-layer/) 的客户端及服务端证书
+
+**说明：** 只有当你运行 kube-proxy 并要支持 [扩展 API 服务器](https://kubernetes.io/zh/docs/tasks/extend-kubernetes/setup-extension-api-server/) 时，才需要 `front-proxy` 证书
+
+etcd 还实现了双向 TLS 来对客户端和对其他对等节点进行身份验证
+
 ### 安装K8s 
 
 执行安装脚本
@@ -117,4 +140,6 @@ kubeadm reset
 ## Kubectl
 
 - 打标签  kubectl  label node node28 node-role.kubernetes.io/worker=worker
+
+### 测试网络联通性
 
